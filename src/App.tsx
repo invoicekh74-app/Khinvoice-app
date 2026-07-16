@@ -1843,51 +1843,39 @@ export default function App() {
 
       {/* ============================================
          INVOICE (create / edit / preview)
-         ============================================ */}
-      {currentScreen === 'Invoice' && profile && (
-        <InvoiceScreen
+  {currentScreen === 'InvoiceOverview' && profile && (
+        <InvoiceOverview
           lang={lang}
-          profile={profile}
-          onBack={() => {
-            setEditInvoiceId(null);
-            setCurrentScreen('InvoiceOverview');
+          onBack={() => setCurrentScreen('Home')}
+          onEditInvoice={(id) => {
+            setEditInvoiceId(id);
+            setCurrentScreen('Invoice');
           }}
-          editInvoiceId={editInvoiceId}
-        />
-      )}
-      {/* ============================================
-         INVOICE (create / edit / preview)
-         ============================================ */}
-      {currentScreen === 'Invoice' && profile && (
-        <InvoiceScreen
-          lang={lang}
-          profile={profile}
-          onBack={() => {
-            setEditInvoiceId(null);
-            setCurrentScreen('InvoiceOverview');
+          onPreviewInvoice={(id) => {
+            setEditInvoiceId(id);
+            setCurrentScreen('Invoice');
           }}
-          editInvoiceId={editInvoiceId}
-        />
-      )}
-      {/* ============================================
-         INVOICE (create / edit / preview)
-         ============================================ */}
-      {currentScreen === 'Invoice' && profile && (
-        <InvoiceScreen
-          lang={lang}
-          profile={profile}
-          onBack={() => {
-            setEditInvoiceId(null);
-            setCurrentScreen('InvoiceOverview'); 
-      onCreateInvoice={() => {
+          onCreateInvoice={() => {
             setEditInvoiceId(null);
             setCurrentScreen('Invoice');
           }}
-           }}
-          editInvoiceId={editInvoiceId}
-          />
+        />
+      )}
+
+      {/* ============================================
+         INVOICE (create / edit / preview)
+         ============================================ */}
+      {currentScreen === 'Invoice' && profile && (
+        <InvoiceScreen
+          lang={lang}
+          profile={profile}
+          onBack={() => {
+            setEditInvoiceId(null);
+            setCurrentScreen('InvoiceOverview');
           }}
-  
+          editInvoiceId={editInvoiceId}
+        />
+      )}
 
       {/* ============================================
          STOCK
