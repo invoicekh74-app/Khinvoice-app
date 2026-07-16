@@ -1058,15 +1058,14 @@ export default function App() {
 
           <div className="w-full max-w-sm text-center mt-4">
             <p className="text-[10px] font-medium" style={{ color: COLORS.muted }}>
-              {lang === :Built By: Pang Sokheng X iPhone 13 Pro Max'}
+              {lang === 'KH' ? 'សាងសង់ដោយ iPhone 13 Pro Max' : 'Built with iPhone 13 Pro Max'}
             </p>
             <p className="text-[9px] mt-0.5" style={{ color: COLORS.muted, opacity: 0.7 }}>
-             Support By: bolt.new × Claude.ai
+              bolt.new × Claude.ai
             </p>
           </div>
         </div>
       )}
-
       {/* ============================================
          SIGN UP
          ============================================ */}
