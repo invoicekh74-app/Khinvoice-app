@@ -162,6 +162,7 @@ export default function App() {
   const [signInPassword, setSignInPassword] = useState('');
   const [showSignInPassword, setShowSignInPassword] = useState(false);
   const [signInError, setSignInError] = useState('');
+  const [signInErrorDetail, setSignInErrorDetail] = useState('');
   const [signInBusy, setSignInBusy] = useState(false);
 
   const [signUpStep, setSignUpStep] = useState(1);
@@ -172,6 +173,7 @@ export default function App() {
   const [signUpConfirmPassword, setSignUpConfirmPassword] = useState('');
   const [showSignUpPassword, setShowSignUpPassword] = useState(false);
   const [signUpError, setSignUpError] = useState('');
+  const [signUpErrorDetail, setSignUpErrorDetail] = useState('');
   const [signUpBusy, setSignUpBusy] = useState(false);
 
   const [isExchangeOpen, setIsExchangeOpen] = useState(false);
@@ -404,78 +406,163 @@ export default function App() {
 
   const handleSignInSubmit = async () => {
     setSignInError('');
+    setSignInErrorDetail('');
     if (!signInPhone || !signInPassword) {
       setSignInError(lang === 'KH' ? 'សូមបំពេញព័ត៌មានឱ្យបានគ្រប់គ្រាន់' : 'Please fill all fields');
       return;
     }
     setSignInBusy(true);
     const email = phoneToEmail(toE164Digits(signInPhone));
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password: signInPassword,
-    });
-    setSignInBusy(false);
+    console.info('[SignIn] Attempting:', { email, phone: signInPhone });
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password: signInPassword,
+      });
+      setSignInBusy(false);
 
-    if (error) {
-      setSignInError(error.message);
-      return;
+      if (error) {
+        console.error('[SignIn] Error:', {
+          message: error.message,
+          name: error.name,
+          status: (error as { status?: number }).status,
+          code: (error as { code?: string }).code,
+          originalError: error,
+        });
+        const detail = JSON.stringify({
+          message: error.message,
+          name: error.name,
+          status: (error as { status?: number }).status,
+          code: (error as { code?: string }).code,
+        }, null, 2);
+        setSignInError(error.message);
+        setSignInErrorDetail(detail);
+        return;
+      }
+
+      console.info('[SignIn] Success:', { userId: data.user?.id, hasSession: !!data.session });
+
+      const p = await loadProfile(data.user.id);
+      if (p?.is_locked) {
+        setSignInError(lang === 'KH' ? 'គណនីរបស់អ្នកត្រូវបានចាក់សោរ!' : 'Your account has been locked!');
+        await supabase.auth.signOut();
+        return;
+      }
+
+      setProfile(p);
+      setCurrentScreen('Home');
+    } catch (e) {
+      setSignInBusy(false);
+      console.error('[SignIn] Exception:', e);
+      const msg = e instanceof Error ? e.message : String(e);
+      const stack = e instanceof Error ? e.stack || '' : '';
+      setSignInError(
+        lang === 'KH'
+          ? `កំហុសបណ្តាញ: ${msg}`
+          : `Network error: ${msg}`
+      );
+      setSignInErrorDetail(JSON.stringify({ message: msg, stack }, null, 2));
     }
-
-    const p = await loadProfile(data.user.id);
-    if (p?.is_locked) {
-      setSignInError(lang === 'KH' ? 'គណនីរបស់អ្នកត្រូវបានចាក់សោរ!' : 'Your account has been locked!');
-      await supabase.auth.signOut();
-      return;
-    }
-
-    setProfile(p);
-    setCurrentScreen('Home');
   };
 
   const handleSignUpSubmit = async () => {
     setSignUpError('');
+    setSignUpErrorDetail('');
     setSignUpBusy(true);
     const email = phoneToEmail(toE164Digits(signUpPhone));
-    const { data, error } = await supabase.auth.signUp({ email, password: signUpPassword });
+    console.info('[SignUp] Attempting:', { email, phone: signUpPhone });
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password: signUpPassword,
+        options: {
+          data: { phone: toE164Digits(signUpPhone) },
+        },
+      });
 
-    if (error) {
-      setSignUpBusy(false);
-      setSignUpError(error.message);
-      return;
-    }
+      if (error) {
+        setSignUpBusy(false);
+        console.error('[SignUp] Error:', {
+          message: error.message,
+          name: error.name,
+          status: (error as { status?: number }).status,
+          code: (error as { code?: string }).code,
+          originalError: error,
+        });
+        const detail = JSON.stringify({
+          message: error.message,
+          name: error.name,
+          status: (error as { status?: number }).status,
+          code: (error as { code?: string }).code,
+        }, null, 2);
+        setSignUpError(error.message);
+        setSignUpErrorDetail(detail);
+        return;
+      }
 
-    if (!data.session) {
+      console.info('[SignUp] Success:', {
+        userId: data.user?.id,
+        hasSession: !!data.session,
+        emailConfirmed: data.user?.email_confirmed_at ? true : false,
+      });
+
+      if (!data.session) {
+        setSignUpBusy(false);
+        console.warn('[SignUp] No session returned — user may need email confirmation');
+        setSignUpError(
+          lang === 'KH'
+            ? 'Email Confirmation នៅតែបើក! សូមចូល Supabase Dashboard → Authentication → Providers → Email ហើយបិទ "Confirm Email" ទម្លាក់ toggle។'
+            : 'Email Confirmation is still ON! Go to Supabase Dashboard → Authentication → Providers → Email and turn OFF "Confirm Email" toggle.'
+        );
+        setSignUpErrorDetail(JSON.stringify({
+          userId: data.user?.id,
+          hasSession: false,
+          emailConfirmed: data.user?.email_confirmed_at ? true : false,
+        }, null, 2));
+        return;
+      }
+
+      const { data: newProfile, error: profileError } = await supabase
+        .from('profiles')
+        .insert({
+          id: data.user?.id,
+          business_name: bizName,
+          username,
+          phone: signUpPhone,
+          trial_started_at: new Date().toISOString(),
+          is_locked: false,
+        })
+        .select()
+        .maybeSingle();
+
       setSignUpBusy(false);
+
+      if (profileError) {
+        console.error('[SignUp] Profile insert error:', profileError);
+        setSignUpError(profileError.message);
+        setSignUpErrorDetail(JSON.stringify({
+          message: profileError.message,
+          code: (profileError as { code?: string }).code,
+          details: (profileError as { details?: string }).details,
+          hint: (profileError as { hint?: string }).hint,
+        }, null, 2));
+        return;
+      }
+
+      setProfile(newProfile as Profile);
+      setCurrentScreen('Home');
+    } catch (e) {
+      setSignUpBusy(false);
+      console.error('[SignUp] Exception:', e);
+      const msg = e instanceof Error ? e.message : String(e);
+      const stack = e instanceof Error ? e.stack || '' : '';
       setSignUpError(
         lang === 'KH'
-          ? 'Email Confirmation នៅតែបើក! សូមចូល Supabase Dashboard → Authentication → Providers → Email ហើយបិទ "Confirm Email" ទម្លាក់ toggle។'
-          : 'Email Confirmation is still ON! Go to Supabase Dashboard → Authentication → Providers → Email and turn OFF "Confirm Email" toggle.'
+          ? `កំហុសបណ្តាញ: ${msg}`
+          : `Network error: ${msg}`
       );
-      return;
+      setSignUpErrorDetail(JSON.stringify({ message: msg, stack }, null, 2));
     }
-
-    const { data: newProfile, error: profileError } = await supabase
-      .from('profiles')
-      .insert({
-        id: data.user?.id,
-        business_name: bizName,
-        username,
-        phone: signUpPhone,
-        trial_started_at: new Date().toISOString(),
-        is_locked: false,
-      })
-      .select()
-      .maybeSingle();
-
-    setSignUpBusy(false);
-
-    if (profileError) {
-      setSignUpError(profileError.message);
-      return;
-    }
-
-    setProfile(newProfile as Profile);
-    setCurrentScreen('Home');
   };
 
   const handleLogout = async () => {
@@ -923,6 +1010,14 @@ export default function App() {
                   style={{ backgroundColor: COLORS.dangerTint, borderColor: '#F4A8A0', color: COLORS.danger }}
                 >
                   {signInError}
+                  {signInErrorDetail && (
+                    <pre
+                      className="mt-2 p-2 rounded text-[10px] overflow-x-auto whitespace-pre-wrap break-all"
+                      style={{ backgroundColor: 'rgba(0,0,0,0.06)', color: '#7a1e1e' }}
+                    >
+                      {signInErrorDetail}
+                    </pre>
+                  )}
                 </div>
               )}
 
@@ -1187,6 +1282,14 @@ export default function App() {
                       }}
                     >
                       {signUpError}
+                      {signUpErrorDetail && (
+                        <pre
+                          className="mt-2 p-2 rounded text-[10px] overflow-x-auto whitespace-pre-wrap break-all"
+                          style={{ backgroundColor: 'rgba(0,0,0,0.06)', color: '#7a1e1e' }}
+                        >
+                          {signUpErrorDetail}
+                        </pre>
+                      )}
                     </div>
                   )}
 
