@@ -1833,9 +1833,7 @@ export default function App() {
           }}
           onPreviewInvoice={(id) => {
             setEditInvoiceId(id);
-            setCurrentScreen('Invoice');
-          }}
-        />
+            setCurrentScreen('Invoice')/>
       )}
 
       {/* ============================================
@@ -1847,13 +1845,16 @@ export default function App() {
           profile={profile}
           onBack={() => {
             setEditInvoiceId(null);
-            setCurrentScreen('InvoiceOverview');
-          }}
+            setCurrentScreen('InvoiceOverview'); 
+      />
+         
+           }}
           editInvoiceId={editInvoiceId}
-        />onCreateInvoice={() => {
+          />onCreateInvoice={() => {
             setEditInvoiceId(null);
             setCurrentScreen('Invoice');
           }}
+  
 
       {/* ============================================
          STOCK
