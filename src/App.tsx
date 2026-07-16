@@ -1058,10 +1058,10 @@ export default function App() {
 
           <div className="w-full max-w-sm text-center mt-4">
             <p className="text-[10px] font-medium" style={{ color: COLORS.muted }}>
-              {lang === 'KH' ? 'សាងសង់ដោយ iPhone 13 Pro Max' : 'Built with iPhone 13 Pro Max'}
+              {lang === 'KH' ? 'Built By: ប៉ាង សុហេង  ' : ' X iPhone 13 Pro Max'}
             </p>
             <p className="text-[9px] mt-0.5" style={{ color: COLORS.muted, opacity: 0.7 }}>
-              bolt.new × Claude.ai
+             Support By: bolt.new × Claude.ai
             </p>
           </div>
         </div>
