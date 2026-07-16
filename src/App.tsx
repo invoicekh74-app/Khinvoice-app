@@ -29,6 +29,10 @@ import InvoiceScreen from './components/InvoiceScreen';
 import InvoiceOverview from './components/InvoiceOverview';
 import StockScreen from './components/StockScreen';
 import AccountScreen from './components/AccountScreen';
+oCreateInvoice={() => {
+            setEditInvoiceId(null);
+            setCurrnentScreen('Invoice');
+          }}
 
 
 
