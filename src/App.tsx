@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import type { Session } from '@supabase/supabase-js';
 import { supabase } from './lib/supabaseClient';
 import { COLORS, t } from './theme';
 import type { Language, Page, Profile, Transaction, Invoice, Product } from './types';
@@ -11,7 +12,7 @@ import { ProfileScreen } from './screens/ProfileScreen';
 import { BottomNav } from './components/BottomNav';
 
 export default function App() {
-  const [session, setSession] = useState<import('@supabase/supabase-js').Session | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [lang, setLang] = useState<Language>('KH');
   const [page, setPage] = useState<Page>('dashboard');
@@ -92,49 +93,19 @@ export default function App() {
   return (
     <div style={{ minHeight: '100dvh', background: COLORS.neutral100, paddingBottom: 80 }}>
       {page === 'dashboard' && (
-        <DashboardScreen
-          lang={lang}
-          setLang={setLang}
-          profile={profile}
-          transactions={transactions}
-          invoices={invoices}
-          products={products}
-          onNavigate={setPage}
-          onSignOut={handleSignOut}
-        />
+        <DashboardScreen lang={lang} setLang={setLang} profile={profile} transactions={transactions} invoices={invoices} products={products} onNavigate={setPage} onSignOut={handleSignOut} />
       )}
       {page === 'transactions' && (
-        <TransactionsScreen
-          lang={lang}
-          transactions={transactions}
-          userId={session.user.id}
-          onRefresh={() => fetchTransactions(session.user.id)}
-        />
+        <TransactionsScreen lang={lang} transactions={transactions} userId={session.user.id} onRefresh={() => fetchTransactions(session.user.id)} />
       )}
       {page === 'invoices' && (
-        <InvoicesScreen
-          lang={lang}
-          invoices={invoices}
-          userId={session.user.id}
-          onRefresh={() => fetchInvoices(session.user.id)}
-        />
+        <InvoicesScreen lang={lang} invoices={invoices} userId={session.user.id} onRefresh={() => fetchInvoices(session.user.id)} />
       )}
       {page === 'products' && (
-        <ProductsScreen
-          lang={lang}
-          products={products}
-          userId={session.user.id}
-          onRefresh={() => fetchProducts(session.user.id)}
-        />
+        <ProductsScreen lang={lang} products={products} userId={session.user.id} onRefresh={() => fetchProducts(session.user.id)} />
       )}
       {page === 'profile' && (
-        <ProfileScreen
-          lang={lang}
-          setLang={setLang}
-          profile={profile}
-          onSignOut={handleSignOut}
-          onRefresh={() => fetchProfile(session.user.id)}
-        />
+        <ProfileScreen lang={lang} setLang={setLang} profile={profile} onSignOut={handleSignOut} onRefresh={() => fetchProfile(session.user.id)} />
       )}
       <BottomNav lang={lang} page={page} onNavigate={setPage} />
     </div>

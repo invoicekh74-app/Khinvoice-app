@@ -21,15 +21,11 @@ export function ProductsScreen({ lang, products }: Props) {
 
   return (
     <div>
-      <ScreenHeader
-        lang={lang}
-        title={t('products', lang)}
-        right={
-          <button className="btn-press" style={{ background: 'rgba(255,255,255,0.15)', border: 'none', borderRadius: 10, padding: 8, cursor: 'pointer' }}>
-            <Plus size={22} color="#fff" />
-          </button>
-        }
-      />
+      <ScreenHeader lang={lang} title={t('products', lang)} right={
+        <button className="btn-press" style={{ background: 'rgba(255,255,255,0.15)', border: 'none', borderRadius: 10, padding: 8, cursor: 'pointer' }}>
+          <Plus size={22} color="#fff" />
+        </button>
+      } />
 
       <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: 10 }}>
         {products.length === 0 ? (

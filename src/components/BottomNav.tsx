@@ -58,20 +58,8 @@ export function BottomNav({ lang, page, onNavigate }: Props) {
               cursor: 'pointer',
             }}
           >
-            <Icon
-              size={22}
-              color={active ? COLORS.primary : COLORS.neutral400}
-              strokeWidth={active ? 2.5 : 2}
-            />
-            <span
-              className={lang === 'KH' ? 'kh' : 'en'}
-              style={{
-                fontSize: 10,
-                fontWeight: active ? 600 : 400,
-                color: active ? COLORS.primary : COLORS.neutral400,
-                transition: 'all 0.2s ease',
-              }}
-            >
+            <Icon size={22} color={active ? COLORS.primary : COLORS.neutral400} strokeWidth={active ? 2.5 : 2} />
+            <span className={lang === 'KH' ? 'kh' : 'en'} style={{ fontSize: 10, fontWeight: active ? 600 : 400, color: active ? COLORS.primary : COLORS.neutral400, transition: 'all 0.2s ease' }}>
               {t(labelKey, lang)}
             </span>
           </button>

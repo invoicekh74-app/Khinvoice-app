@@ -23,22 +23,14 @@ export function TransactionsScreen({ lang, transactions, userId, onRefresh }: Pr
   const fmt = (n: number) => `$${n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`;
 
   const handleAdd = async () => {
-    if (!form.description || !form.unitPrice) {
-      setError(lang === 'KH' ? 'សូមបំពេញទិន្នន័យ' : 'Please fill required fields');
-      return;
-    }
+    if (!form.description || !form.unitPrice) { setError(lang === 'KH' ? 'សូមបំពេញទិន្នន័យ' : 'Please fill required fields'); return; }
     setSaving(true);
     setError('');
     const { error: err } = await supabase.from('transactions').insert({
-      user_id: userId,
-      type: form.type,
-      description: form.description,
-      quantity: Number(form.quantity) || 1,
-      unit: form.unit || null,
-      unit_price: Number(form.unitPrice),
-      amount: Number(form.unitPrice) * (Number(form.quantity) || 1),
-      transaction_date: form.date,
-      currency: 'USD',
+      user_id: userId, type: form.type, description: form.description,
+      quantity: Number(form.quantity) || 1, unit: form.unit || null,
+      unit_price: Number(form.unitPrice), amount: Number(form.unitPrice) * (Number(form.quantity) || 1),
+      transaction_date: form.date, currency: 'USD',
     });
     setSaving(false);
     if (err) { setError(err.message); return; }
@@ -61,39 +53,28 @@ export function TransactionsScreen({ lang, transactions, userId, onRefresh }: Pr
 
   return (
     <div>
-      <ScreenHeader
-        lang={lang}
-        title={t('transactions', lang)}
-        right={
-          <button onClick={() => setShowAdd(true)} className="btn-press" style={{ background: 'rgba(255,255,255,0.15)', border: 'none', borderRadius: 10, padding: 8, cursor: 'pointer' }}>
-            <Plus size={22} color="#fff" />
-          </button>
-        }
-      />
+      <ScreenHeader lang={lang} title={t('transactions', lang)} right={
+        <button onClick={() => setShowAdd(true)} className="btn-press" style={{ background: 'rgba(255,255,255,0.15)', border: 'none', borderRadius: 10, padding: 8, cursor: 'pointer' }}>
+          <Plus size={22} color="#fff" />
+        </button>
+      } />
 
-      {/* Filter tabs */}
       <div style={{ display: 'flex', gap: 8, padding: '12px 16px' }}>
         {(['all', 'income', 'expense'] as const).map((f) => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            className="btn-press"
-            style={{
-              padding: '6px 16px', borderRadius: 20, cursor: 'pointer',
-              background: filter === f ? COLORS.primary : COLORS.neutral0,
-              color: filter === f ? '#fff' : COLORS.neutral500,
-              fontSize: 13, fontWeight: 600,
-              fontFamily: lang === 'KH' ? 'var(--font-kh)' : 'var(--font-en)',
-              boxShadow: filter === f ? 'var(--shadow-sm)' : 'none',
-              border: `1px solid ${filter === f ? COLORS.primary : COLORS.neutral200}`,
-            }}
-          >
+          <button key={f} onClick={() => setFilter(f)} className="btn-press" style={{
+            padding: '6px 16px', borderRadius: 20, cursor: 'pointer',
+            background: filter === f ? COLORS.primary : COLORS.neutral0,
+            color: filter === f ? '#fff' : COLORS.neutral500,
+            fontSize: 13, fontWeight: 600,
+            fontFamily: lang === 'KH' ? 'var(--font-kh)' : 'var(--font-en)',
+            boxShadow: filter === f ? 'var(--shadow-sm)' : 'none',
+            border: `1px solid ${filter === f ? COLORS.primary : COLORS.neutral200}`,
+          }}>
             <span className={lang === 'KH' ? 'kh' : 'en'}>{t(f, lang)}</span>
           </button>
         ))}
       </div>
 
-      {/* List */}
       <div style={{ padding: '0 16px 20px', display: 'flex', flexDirection: 'column', gap: 8 }}>
         {filtered.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '40px 20px', background: COLORS.neutral0, borderRadius: 16, border: `1px dashed ${COLORS.neutral200}` }}>
@@ -104,11 +85,7 @@ export function TransactionsScreen({ lang, transactions, userId, onRefresh }: Pr
             const amt = Number(tx.amount || tx.unit_price * tx.quantity);
             const isIncome = tx.type === 'income';
             return (
-              <div
-                key={tx.id}
-                className="animate-slide-up"
-                style={{ animationDelay: `${i * 30}ms`, background: COLORS.neutral0, borderRadius: 14, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 12, boxShadow: 'var(--shadow-sm)', border: `1px solid ${COLORS.neutral200}` }}
-              >
+              <div key={tx.id} className="animate-slide-up" style={{ animationDelay: `${i * 30}ms`, background: COLORS.neutral0, borderRadius: 14, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 12, boxShadow: 'var(--shadow-sm)', border: `1px solid ${COLORS.neutral200}` }}>
                 <div style={{ width: 40, height: 40, borderRadius: 12, background: isIncome ? COLORS.successTint : COLORS.dangerTint, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   {isIncome ? <TrendingUp size={18} color={COLORS.success} /> : <TrendingDown size={18} color={COLORS.danger} />}
                 </div>
@@ -116,16 +93,13 @@ export function TransactionsScreen({ lang, transactions, userId, onRefresh }: Pr
                   <p className={lang === 'KH' ? 'kh' : 'en'} style={{ fontSize: 14, fontWeight: 600, color: COLORS.neutral800, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{tx.description}</p>
                   <p className="en" style={{ fontSize: 11, color: COLORS.neutral400, margin: 0, marginTop: 2 }}>{tx.transaction_date} · {tx.quantity} {tx.unit || ''}</p>
                 </div>
-                <p className="en" style={{ fontSize: 15, fontWeight: 700, color: isIncome ? COLORS.success : COLORS.danger, margin: 0, flexShrink: 0 }}>
-                  {isIncome ? '+' : '-'}{fmt(amt)}
-                </p>
+                <p className="en" style={{ fontSize: 15, fontWeight: 700, color: isIncome ? COLORS.success : COLORS.danger, margin: 0, flexShrink: 0 }}>{isIncome ? '+' : '-'}{fmt(amt)}</p>
               </div>
             );
           })
         )}
       </div>
 
-      {/* Add modal */}
       {showAdd && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', zIndex: 200, display: 'flex', alignItems: 'flex-end', maxWidth: 480, margin: '0 auto' }} onClick={() => setShowAdd(false)}>
           <div className="animate-slide-up" style={{ background: COLORS.neutral0, borderRadius: '24px 24px 0 0', padding: 24, width: '100%', maxHeight: '80dvh', overflowY: 'auto' }} onClick={(e) => e.stopPropagation()}>
@@ -134,11 +108,11 @@ export function TransactionsScreen({ lang, transactions, userId, onRefresh }: Pr
               <button onClick={() => setShowAdd(false)} style={{ border: 'none', background: COLORS.neutral100, borderRadius: 10, padding: 8, cursor: 'pointer' }}><X size={20} color={COLORS.neutral500} /></button>
             </div>
 
-            {/* Type toggle */}
             <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
               {(['income', 'expense'] as const).map((tp) => (
                 <button key={tp} onClick={() => setForm({ ...form, type: tp })} className="btn-press" style={{
-                  flex: 1, padding: '10px', borderRadius: 10, border: `1.5px solid ${form.type === tp ? (tp === 'income' ? COLORS.success : COLORS.danger) : COLORS.neutral200}`,
+                  flex: 1, padding: '10px', borderRadius: 10,
+                  border: `1.5px solid ${form.type === tp ? (tp === 'income' ? COLORS.success : COLORS.danger) : COLORS.neutral200}`,
                   background: form.type === tp ? (tp === 'income' ? COLORS.successTint : COLORS.dangerTint) : COLORS.neutral50,
                   cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
                 }}>

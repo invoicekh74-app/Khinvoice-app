@@ -1,5 +1,4 @@
 :root {
-  /* Primary — Teal */
   --c-primary-50: #f0fdfa;
   --c-primary-100: #ccfbf1;
   --c-primary-200: #99f6e4;
@@ -10,8 +9,6 @@
   --c-primary-700: #0f766e;
   --c-primary-800: #115e59;
   --c-primary-900: #134e4a;
-
-  /* Accent — Amber */
   --c-accent-50: #fffbeb;
   --c-accent-100: #fef3c7;
   --c-accent-200: #fde68a;
@@ -20,28 +17,20 @@
   --c-accent-500: #f59e0b;
   --c-accent-600: #d97706;
   --c-accent-700: #b45309;
-
-  /* Success — Green */
   --c-success-50: #f0fdf4;
   --c-success-100: #dcfce7;
   --c-success-500: #22c55e;
   --c-success-600: #16a34a;
   --c-success-700: #15803d;
-
-  /* Warning — Orange */
   --c-warning-50: #fff7ed;
   --c-warning-100: #ffedd5;
   --c-warning-500: #f97316;
   --c-warning-600: #ea580c;
-
-  /* Danger — Red */
   --c-danger-50: #fef2f2;
   --c-danger-100: #fee2e2;
   --c-danger-500: #ef4444;
   --c-danger-600: #dc2626;
   --c-danger-700: #b91c1c;
-
-  /* Neutrals — Slate */
   --c-neutral-0: #ffffff;
   --c-neutral-50: #f8fafc;
   --c-neutral-100: #f1f5f9;
@@ -53,18 +42,12 @@
   --c-neutral-700: #334155;
   --c-neutral-800: #1e293b;
   --c-neutral-900: #0f172a;
-
-  /* Typography */
   --font-kh: 'Kantumruy Pro', 'Noto Sans Khmer', sans-serif;
   --font-en: 'Inter', system-ui, sans-serif;
-
-  /* Shadows */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-
-  /* Radius */
   --r-sm: 8px;
   --r-md: 12px;
   --r-lg: 16px;
@@ -72,103 +55,28 @@
   --r-full: 9999px;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; overflow-x: hidden; }
+body { font-family: var(--font-en); background: var(--c-neutral-100); color: var(--c-neutral-800); line-height: 1.5; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+#root { min-height: 100%; max-width: 480px; margin: 0 auto; background: var(--c-neutral-100); min-height: 100dvh; position: relative; }
+.kh { font-family: var(--font-kh); }
+.en { font-family: var(--font-en); }
+::-webkit-scrollbar { width: 0; display: none; }
 
-html, body {
-  height: 100%;
-  overflow-x: hidden;
-}
-
-body {
-  font-family: var(--font-en);
-  background: var(--c-neutral-100);
-  color: var(--c-neutral-800);
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#root {
-  min-height: 100%;
-  max-width: 480px;
-  margin: 0 auto;
-  background: var(--c-neutral-100);
-  min-height: 100dvh;
-  position: relative;
-}
-
-/* Khmer text uses Kantumruy Pro */
-.kh {
-  font-family: var(--font-kh);
-}
-
-/* English text uses Inter */
-.en {
-  font-family: var(--font-en);
-}
-
-/* Scrollbar hide */
-::-webkit-scrollbar {
-  width: 0;
-  display: none;
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideInRight {
-  from { opacity: 0; transform: translateX(24px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideInRight { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 
 .animate-fade-in { animation: fadeIn 0.3s ease-out; }
 .animate-slide-up { animation: slideUp 0.4s ease-out; }
 .animate-slide-right { animation: slideInRight 0.3s ease-out; }
 .animate-scale-in { animation: scaleIn 0.25s ease-out; }
 
-/* Shimmer loading */
-.shimmer {
-  background: linear-gradient(90deg, var(--c-neutral-100) 25%, var(--c-neutral-200) 50%, var(--c-neutral-100) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-/* Button press effect */
-.btn-press {
-  transition: transform 0.1s ease;
-}
-.btn-press:active {
-  transform: scale(0.97);
-}
-
-/* Input focus ring */
-input:focus, textarea:focus, select:focus {
-  outline: none;
-}
-
-/* Safe area */
+.shimmer { background: linear-gradient(90deg, var(--c-neutral-100) 25%, var(--c-neutral-200) 50%, var(--c-neutral-100) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+.btn-press { transition: transform 0.1s ease; }
+.btn-press:active { transform: scale(0.97); }
+input:focus, textarea:focus, select:focus { outline: none; }
 .safe-top { padding-top: env(safe-area-inset-top); }
 .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }

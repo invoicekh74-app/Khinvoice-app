@@ -39,58 +39,37 @@ export function ProfileScreen({ lang, setLang, profile, onSignOut, onRefresh }: 
 
   const Row = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string | null }) => (
     <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px', borderBottom: `1px solid ${COLORS.neutral100}` }}>
-      <div style={{ width: 36, height: 36, borderRadius: 10, background: COLORS.primaryTint, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-        {icon}
-      </div>
+      <div style={{ width: 36, height: 36, borderRadius: 10, background: COLORS.primaryTint, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{icon}</div>
       <div style={{ flex: 1, minWidth: 0 }}>
         <p className={lang === 'KH' ? 'kh' : 'en'} style={{ fontSize: 11, color: COLORS.neutral400, margin: 0 }}>{label}</p>
-        <p className={lang === 'KH' ? 'kh' : 'en'} style={{ fontSize: 15, fontWeight: 500, color: COLORS.neutral800, margin: 0, marginTop: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-          {value || '—'}
-        </p>
+        <p className={lang === 'KH' ? 'kh' : 'en'} style={{ fontSize: 15, fontWeight: 500, color: COLORS.neutral800, margin: 0, marginTop: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{value || '—'}</p>
       </div>
     </div>
   );
 
   return (
     <div>
-      <ScreenHeader
-        lang={lang}
-        title={t('profile', lang)}
-        right={
-          editing ? (
-            <button onClick={handleSave} disabled={saving} className="btn-press" style={{ background: 'rgba(255,255,255,0.15)', border: 'none', borderRadius: 10, padding: 8, cursor: 'pointer' }}>
-              <Save size={20} color="#fff" />
-            </button>
-          ) : (
-            <button onClick={() => setEditing(true)} className="btn-press" style={{ background: 'rgba(255,255,255,0.15)', border: 'none', borderRadius: 10, padding: '8px 14px', color: '#fff', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: lang === 'KH' ? 'var(--font-kh)' : 'var(--font-en)' }}>
-              <span className={lang === 'KH' ? 'kh' : 'en'}>{t('edit', lang)}</span>
-            </button>
-          )
-        }
-      />
+      <ScreenHeader lang={lang} title={t('profile', lang)} right={
+        editing ? (
+          <button onClick={handleSave} disabled={saving} className="btn-press" style={{ background: 'rgba(255,255,255,0.15)', border: 'none', borderRadius: 10, padding: 8, cursor: 'pointer' }}>
+            <Save size={20} color="#fff" />
+          </button>
+        ) : (
+          <button onClick={() => setEditing(true)} className="btn-press" style={{ background: 'rgba(255,255,255,0.15)', border: 'none', borderRadius: 10, padding: '8px 14px', color: '#fff', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: lang === 'KH' ? 'var(--font-kh)' : 'var(--font-en)' }}>
+            <span className={lang === 'KH' ? 'kh' : 'en'}>{t('edit', lang)}</span>
+          </button>
+        )
+      } />
 
-      {/* Avatar + name */}
       <div style={{ padding: '24px 20px', textAlign: 'center' }}>
-        <div
-          className="animate-scale-in"
-          style={{ width: 80, height: 80, borderRadius: '50%', background: `linear-gradient(135deg, ${COLORS.primary}, ${COLORS.primaryDark})`, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: 12, boxShadow: 'var(--shadow-lg)' }}
-        >
+        <div className="animate-scale-in" style={{ width: 80, height: 80, borderRadius: '50%', background: `linear-gradient(135deg, ${COLORS.primary}, ${COLORS.primaryDark})`, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: 12, boxShadow: 'var(--shadow-lg)' }}>
           <User size={36} color="#fff" />
         </div>
-        <h2 className={lang === 'KH' ? 'kh' : 'en'} style={{ fontSize: 20, fontWeight: 700, color: COLORS.neutral800, margin: 0 }}>
-          {profile?.business_name || profile?.username || (lang === 'KH' ? 'អាជីព' : 'Business')}
-        </h2>
-        <p className="en" style={{ fontSize: 13, color: COLORS.neutral400, margin: 0, marginTop: 4 }}>
-          {profile?.phone || ''}
-        </p>
-        {saved && (
-          <p className="animate-fade-in kh" style={{ fontSize: 13, color: COLORS.success, marginTop: 8, fontWeight: 500 }}>
-            {lang === 'KH' ? 'រក្សាទុកដោយជោគជ័យ!' : 'Saved successfully!'}
-          </p>
-        )}
+        <h2 className={lang === 'KH' ? 'kh' : 'en'} style={{ fontSize: 20, fontWeight: 700, color: COLORS.neutral800, margin: 0 }}>{profile?.business_name || profile?.username || (lang === 'KH' ? 'អាជីព' : 'Business')}</h2>
+        <p className="en" style={{ fontSize: 13, color: COLORS.neutral400, margin: 0, marginTop: 4 }}>{profile?.phone || ''}</p>
+        {saved && <p className="animate-fade-in kh" style={{ fontSize: 13, color: COLORS.success, marginTop: 8, fontWeight: 500 }}>{lang === 'KH' ? 'រក្សាទុកដោយជោគជ័យ!' : 'Saved successfully!'}</p>}
       </div>
 
-      {/* Info card */}
       <div style={{ margin: '0 16px 16px', background: COLORS.neutral0, borderRadius: 16, overflow: 'hidden', boxShadow: 'var(--shadow-md)', border: `1px solid ${COLORS.neutral200}` }}>
         {editing ? (
           <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -112,7 +91,6 @@ export function ProfileScreen({ lang, setLang, profile, onSignOut, onRefresh }: 
         )}
       </div>
 
-      {/* Language */}
       <div style={{ margin: '0 16px 16px', background: COLORS.neutral0, borderRadius: 16, overflow: 'hidden', boxShadow: 'var(--shadow-md)', border: `1px solid ${COLORS.neutral200}` }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px' }}>
           <div style={{ width: 36, height: 36, borderRadius: 10, background: COLORS.accentTint, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -133,18 +111,13 @@ export function ProfileScreen({ lang, setLang, profile, onSignOut, onRefresh }: 
         </div>
       </div>
 
-      {/* Sign out */}
       <div style={{ margin: '0 16px 20px' }}>
-        <button
-          onClick={onSignOut}
-          className="btn-press"
-          style={{
-            width: '100%', padding: '14px', borderRadius: 14, border: `1.5px solid ${COLORS.dangerTint}`,
-            background: COLORS.dangerTint, color: COLORS.danger, fontSize: 15, fontWeight: 700,
-            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-            fontFamily: lang === 'KH' ? 'var(--font-kh)' : 'var(--font-en)',
-          }}
-        >
+        <button onClick={onSignOut} className="btn-press" style={{
+          width: '100%', padding: '14px', borderRadius: 14, border: `1.5px solid ${COLORS.dangerTint}`,
+          background: COLORS.dangerTint, color: COLORS.danger, fontSize: 15, fontWeight: 700,
+          cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+          fontFamily: lang === 'KH' ? 'var(--font-kh)' : 'var(--font-en)',
+        }}>
           <LogOut size={18} color={COLORS.danger} />
           <span className={lang === 'KH' ? 'kh' : 'en'}>{t('signOut', lang)}</span>
         </button>

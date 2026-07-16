@@ -12,29 +12,16 @@ interface Props {
 
 export function InvoicesScreen({ lang, invoices }: Props) {
   const fmt = (n: number) => `$${n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`;
-
-  const statusColor = (s: string) => {
-    if (s === 'paid') return COLORS.success;
-    if (s === 'partial') return COLORS.warning;
-    return COLORS.danger;
-  };
-  const statusBg = (s: string) => {
-    if (s === 'paid') return COLORS.successTint;
-    if (s === 'partial') return COLORS.warningTint;
-    return COLORS.dangerTint;
-  };
+  const statusColor = (s: string) => s === 'paid' ? COLORS.success : s === 'partial' ? COLORS.warning : COLORS.danger;
+  const statusBg = (s: string) => s === 'paid' ? COLORS.successTint : s === 'partial' ? COLORS.warningTint : COLORS.dangerTint;
 
   return (
     <div>
-      <ScreenHeader
-        lang={lang}
-        title={t('invoices', lang)}
-        right={
-          <button className="btn-press" style={{ background: 'rgba(255,255,255,0.15)', border: 'none', borderRadius: 10, padding: 8, cursor: 'pointer' }}>
-            <Plus size={22} color="#fff" />
-          </button>
-        }
-      />
+      <ScreenHeader lang={lang} title={t('invoices', lang)} right={
+        <button className="btn-press" style={{ background: 'rgba(255,255,255,0.15)', border: 'none', borderRadius: 10, padding: 8, cursor: 'pointer' }}>
+          <Plus size={22} color="#fff" />
+        </button>
+      } />
 
       <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: 10 }}>
         {invoices.length === 0 ? (
@@ -50,7 +37,7 @@ export function InvoicesScreen({ lang, invoices }: Props) {
                   <p className="en" style={{ fontSize: 16, fontWeight: 700, color: COLORS.neutral800, margin: 0 }}>#{inv.invoice_number}</p>
                   <p className={lang === 'KH' ? 'kh' : 'en'} style={{ fontSize: 13, color: COLORS.neutral500, margin: 0, marginTop: 2 }}>{inv.customer_name}</p>
                 </div>
-                <span style={{ padding: '4px 12px', borderRadius: 20, fontSize: 11, fontWeight: 600, background: statusBg(inv.status), color: statusColor(inv.status), fontFamily: lang === 'KH' ? 'var(--font-kh)' : 'var(--font-en)' }} className={lang === 'KH' ? 'kh' : 'en'}>
+                <span className={lang === 'KH' ? 'kh' : 'en'} style={{ padding: '4px 12px', borderRadius: 20, fontSize: 11, fontWeight: 600, background: statusBg(inv.status), color: statusColor(inv.status), fontFamily: lang === 'KH' ? 'var(--font-kh)' : 'var(--font-en)' }}>
                   {t(inv.status as 'paid' | 'unpaid' | 'partial', lang)}
                 </span>
               </div>

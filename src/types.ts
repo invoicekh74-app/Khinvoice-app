@@ -1,7 +1,5 @@
 export type Language = 'EN' | 'KH';
-
 export type TransactionType = 'income' | 'expense';
-
 export type Page = 'dashboard' | 'transactions' | 'invoices' | 'products' | 'profile';
 
 export interface Profile {
