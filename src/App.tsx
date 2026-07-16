@@ -1045,7 +1045,7 @@ export default function App() {
                 </span>
               </button>
 
-          <button
+              <button
                 onClick={openTelegram}
                 className="w-full mt-5 pt-3 border-t text-xs font-semibold flex items-center justify-center gap-1.5"
                 style={{ borderColor: COLORS.border, color: COLORS.goldDark }}
@@ -1053,12 +1053,6 @@ export default function App() {
                 <Send size={INLINE} color={COLORS.goldDark} strokeWidth={2} />
                 {t.help}
               </button>
-
-              <p className="w-full mt-3 text-center text-[10px]" style={{ color: COLORS.muted }}>
-                {lang === 'KH'
-                  ? 'សាងសង់ដោយ iPhone 13 Pro Max • ft @bolt.new @Claude.ai'
-                  : 'Building by iPhone 13 Pro Max • ft @bolt.new @Claude.ai'}
-              </p>
             </div>
           </div>
         </div>
