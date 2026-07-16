@@ -58,12 +58,13 @@ interface InvoiceRow {
   status: string;
 }
 
-interface Props {
-  lang: 'KH' | 'EN';
-  onBack: () => void;
-  onEditInvoice: (invoiceId: string) => void;
-  onPreviewInvoice: (invoiceId: string) => void;
-}
+export default function InvoiceOverview({
+  lang,
+  onBack,
+  onEditInvoice,
+  onPreviewInvoice,
+  onCreateInvoice,
+}: Props) {
 
 function getRangeDates(range: RangeKey, customStart: string, customEnd: string) {
   const today = new Date();
@@ -397,10 +398,18 @@ export default function InvoiceOverview({
         >
           <ArrowLeft size={20} color="#FFFFFF" strokeWidth={2} />
         </button>
-        <div>
+       <div className="flex-1">
           <p className="text-white font-bold text-base">{tr('ទិដ្ឋភាពវិក្កយបត្រ', 'Invoice Overview')}</p>
           <p className="text-white/70 text-xs">{tr('រាល់វិក្កយបត្រទាំងអស់', 'All your invoices')}</p>
         </div>
+        <button
+          onClick={onCreateInvoice}
+          className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl font-bold text-sm"
+          style={{ backgroundColor: '#FFFFFF', color: COLORS.invoice }}
+        >
+          <span style={{ fontSize: 16, lineHeight: 1 }}>+</span>
+          {tr('បង្កើតថ្មី', 'New')}
+        </button>
       </div>
 
       {/* Search + Ranges */}
