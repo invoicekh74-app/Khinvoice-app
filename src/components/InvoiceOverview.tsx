@@ -63,6 +63,7 @@ interface Props {
   onBack: () => void;
   onEditInvoice: (invoiceId: string) => void;
   onPreviewInvoice: (invoiceId: string) => void;
+  onCreateInvoice: () => void;
 }
 
 function getRangeDates(range: RangeKey, customStart: string, customEnd: string) {
