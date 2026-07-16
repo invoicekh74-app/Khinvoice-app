@@ -926,7 +926,7 @@ export default function App() {
          SIGN IN
          ============================================ */}
       {currentScreen === 'SignIn' && (
-        <div className="flex flex-col justify-center items-center p-4 min-h-[85vh]">
+        <div className="flex justify-center items-center p-4 min-h-[85vh]">
           <div
             className="w-full max-w-sm rounded-2xl overflow-hidden bg-white"
             style={{ boxShadow: '0 6px 20px rgba(24,41,62,0.07)' }}
@@ -1055,17 +1055,9 @@ export default function App() {
               </button>
             </div>
           </div>
-
-          <div className="w-full max-w-sm text-center mt-4">
-            <p className="text-[9px] font-medium" style={{ color: COLORS.muted, opacity: 0.7 }}>
-              {lang === 'KH' ? 'Built By: HEng x iPhone 13 Pro Max' : 'Built with iPhone 13 Pro Max'}
-            </p>
-            <p className="text-[9px] mt-0.5" style={{ color: COLORS.muted, opacity: 0.7 }}>
-            Support By: bolt.new × Claude.ai
-            </p>
-          </div>
         </div>
       )}
+
       {/* ============================================
          SIGN UP
          ============================================ */}
@@ -1838,10 +1830,6 @@ export default function App() {
             setEditInvoiceId(id);
             setCurrentScreen('Invoice');
           }}
-          onCreateInvoice={() => {
-            setEditInvoiceId(null);
-            setCurrentScreen('Invoice');
-          }}
         />
       )}
 
@@ -1859,6 +1847,7 @@ export default function App() {
           editInvoiceId={editInvoiceId}
         />
       )}
+
       {/* ============================================
          STOCK
          ============================================ */}
