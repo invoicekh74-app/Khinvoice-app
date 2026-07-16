@@ -32,11 +32,6 @@ import AccountScreen from './components/AccountScreen';
 
 
 
-
-
-
-
-
 const COLORS = {
   navy: '#12303A',
   navyGradientStart: '#0D2530',
@@ -1050,19 +1045,25 @@ export default function App() {
                 </span>
               </button>
 
-     <div className="flex-1">
-          <p className="text-white font-bold text-base">{tr('ទិដ្ឋភាពវិក្កយបត្រ', 'Invoice Overview')}</p>
-          <p className="text-white/70 text-xs">{tr('រាល់វិក្កយបត្រទាំងអស់', 'All your invoices')}</p>
+          <button
+                onClick={openTelegram}
+                className="w-full mt-5 pt-3 border-t text-xs font-semibold flex items-center justify-center gap-1.5"
+                style={{ borderColor: COLORS.border, color: COLORS.goldDark }}
+              >
+                <Send size={INLINE} color={COLORS.goldDark} strokeWidth={2} />
+                {t.help}
+              </button>
+
+              <p className="w-full mt-3 text-center text-[10px]" style={{ color: COLORS.muted }}>
+                {lang === 'KH'
+                  ? 'សាងសង់ដោយ iPhone 13 Pro Max • ft @bolt.new @Claude.ai'
+                  : 'Building by iPhone 13 Pro Max • ft @bolt.new @Claude.ai'}
+              </p>
+            </div>
+          </div>
         </div>
-        <button
-          onClick={onCreateInvoice}
-          className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl font-bold text-sm"
-          style={{ backgroundColor: '#FFFFFF', color: COLORS.invoice }}
-        >
-          <span style={{ fontSize: 16, lineHeight: 1 }}>+</span>
-          {tr('បង្កើតថ្មី', 'New')}
-        </button>
-      </div>
+      )}
+
       {/* ============================================
          SIGN UP
          ============================================ */}
@@ -1822,7 +1823,8 @@ export default function App() {
 
       {/* ============================================
          INVOICE OVERVIEW (list)
-{currentScreen === 'InvoiceOverview' && profile && (
+         ============================================ */}
+      {currentScreen === 'InvoiceOverview' && profile && (
         <InvoiceOverview
           lang={lang}
           onBack={() => setCurrentScreen('Home')}
@@ -1832,10 +1834,6 @@ export default function App() {
           }}
           onPreviewInvoice={(id) => {
             setEditInvoiceId(id);
-            setCurrentScreen('Invoice');
-          }}
-          onCreateInvoice={() => {
-            setEditInvoiceId(null);
             setCurrentScreen('Invoice');
           }}
         />
@@ -1855,6 +1853,7 @@ export default function App() {
           editInvoiceId={editInvoiceId}
         />
       )}
+
       {/* ============================================
          STOCK
          ============================================ */}
