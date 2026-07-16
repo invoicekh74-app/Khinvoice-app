@@ -1822,28 +1822,7 @@ export default function App() {
 
       {/* ============================================
          INVOICE OVERVIEW (list)
- {currentScreen === 'InvoiceOverview' && profile && (
-        <InvoiceOverview
-          lang={lang}
-          onBack={() => setCurrentScreen('Home')}
-          onEditInvoice={(id) => {
-            setEditInvoiceId(id);
-            setCurrentScreen('Invoice');
-          }}
-          onPreviewInvoice={(id) => {
-            setEditInvoiceId(id);
-            setCurrentScreen('Invoice');
-          }}
-          onCreateInvoice={() => {
-            setEditInvoiceId(null);
-            setCurrentScreen('Invoice');
-          }}
-        />
-      )}
-
-      {/* ============================================
-         INVOICE (create / edit / preview)
-  {currentScreen === 'InvoiceOverview' && profile && (
+{currentScreen === 'InvoiceOverview' && profile && (
         <InvoiceOverview
           lang={lang}
           onBack={() => setCurrentScreen('Home')}
