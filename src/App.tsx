@@ -1839,11 +1839,14 @@ export default function App() {
             setEditInvoiceId(id);
             setCurrentScreen('Invoice');
           }}
-     onCreateInvoice={() => {
+          onCreateInvoice={() => {
             setEditInvoiceId(null);
             setCurrentScreen('Invoice');
           }}
+        />
+      )}
 
+      {/* ============================================
          INVOICE (create / edit / preview)
          ============================================ */}
       {currentScreen === 'Invoice' && profile && (
@@ -1857,7 +1860,6 @@ export default function App() {
           editInvoiceId={editInvoiceId}
         />
       )}
-
       {/* ============================================
          STOCK
          ============================================ */}
