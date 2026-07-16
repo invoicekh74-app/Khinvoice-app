@@ -1061,7 +1061,7 @@ export default function App() {
               {lang === 'KH' ? 'Built By: HEng x iPhone 13 Pro Max' : 'Built with iPhone 13 Pro Max'}
             </p>
             <p className="text-[9px] mt-0.5" style={{ color: COLORS.muted, opacity: 0.7 }}>
-              bolt.new × Claude.ai
+            Support By: bolt.new × Claude.ai
             </p>
           </div>
         </div>
