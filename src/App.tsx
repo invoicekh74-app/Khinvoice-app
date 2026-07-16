@@ -1831,9 +1831,9 @@ export default function App() {
             setEditInvoiceId(id);
             setCurrentScreen('Invoice');
           }}
-          onPreviewInvoice={(id) => {
-            setEditInvoiceId(id);
-            setCurrentScreen('Invoice')/>
+         onPreviewInvoice={(id) => {
+          setEditInvoiceId(id);
+         setCurrentScreen('Invoice')/>      
       )}
 
       {/* ============================================
