@@ -1850,10 +1850,6 @@ export default function App() {
             setEditInvoiceId(null);
             setCurrentScreen('Invoice');
           }}
-Save file (Ctrl+S)។
-
-រួចហើយ Preview វិញ នឹងឃើញប៊ូតុង "+ បង្កើតថ្មី" ពណ៌ស នៅជ្រុងស្តាំខាងលើអេក្រង់ "ទិដ្ឋភាពវិក្កយបត្រ" ចុចវានឹងបើកទម្រង់បង្កើតវិក្កយបត្រថ្មីភ្លាម។ សាកល្បងចុចមើល រួចថតរូបផ្ញើមកខ្ញុំបានទេ ដើម្បីបញ្ជាក់ថាដំណើរការត្រឹមត្រូវ?/>
-         
            }}
           editInvoiceId={editInvoiceId}
           />
