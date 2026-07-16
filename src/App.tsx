@@ -1855,7 +1855,6 @@ export default function App() {
           editInvoiceId={editInvoiceId}
         />
       )}
-
       {/* ============================================
          STOCK
          ============================================ */}
