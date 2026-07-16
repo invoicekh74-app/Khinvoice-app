@@ -1830,8 +1830,10 @@ export default function App() {
             setEditInvoiceId(id);
             setCurrentScreen('Invoice');
           }}
-        />
-      )}
+     onCreateInvoice={() => {
+            setEditInvoiceId(null);
+            setCurrentScreen('Invoice');
+          }}
 
       {/* ============================================
          INVOICE (create / edit / preview)
