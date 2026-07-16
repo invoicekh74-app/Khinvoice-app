@@ -298,7 +298,6 @@ export default function StockScreen({ lang, onBack }: Props) {
   const handleDelete = async () => {
     if (!deleteTarget) return;
     setDeleteBusy(true);
-    // Soft delete so historical invoice items / movements stay intact.
     const { error } = await supabase
       .from('products')
       .update({ is_active: false })
@@ -314,12 +313,9 @@ export default function StockScreen({ lang, onBack }: Props) {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: COLORS.bgApp }}>
-      {/* Header */}
       <div
         className="px-4 pt-4 pb-4 flex items-center gap-3"
-        style={{
-          background: `linear-gradient(135deg, ${COLORS.navy} 0%, #1A4453 100%)`,
-        }}
+        style={{ background: `linear-gradient(135deg, ${COLORS.navy} 0%, #1A4453 100%)` }}
       >
         <button
           onClick={onBack}
@@ -337,7 +333,6 @@ export default function StockScreen({ lang, onBack }: Props) {
       </div>
 
       <div className="flex-1 overflow-y-auto p-3.5 pb-24 -mt-2">
-        {/* Summary cards */}
         <div className="grid grid-cols-3 gap-2">
           <div className="p-3 rounded-xl border bg-white" style={{ borderColor: COLORS.border }}>
             <IconBadge icon={Package} size={INLINE} tint="stock" shape="rounded" />
@@ -368,7 +363,6 @@ export default function StockScreen({ lang, onBack }: Props) {
           </div>
         </div>
 
-        {/* Search + Add */}
         <div className="flex gap-2 mt-4">
           <div
             className="flex-1 flex items-center gap-2 px-3 rounded-xl border bg-white"
@@ -393,7 +387,6 @@ export default function StockScreen({ lang, onBack }: Props) {
           </button>
         </div>
 
-        {/* Product list */}
         <div className="mt-4 space-y-2.5">
           {loading && (
             <p className="text-xs text-center py-6" style={{ color: COLORS.muted }}>
@@ -496,7 +489,6 @@ export default function StockScreen({ lang, onBack }: Props) {
         </div>
       </div>
 
-      {/* Add / Edit Product Modal */}
       {isFormOpen && (
         <div
           className="fixed inset-0 flex items-end justify-center z-50"
@@ -634,7 +626,6 @@ export default function StockScreen({ lang, onBack }: Props) {
         </div>
       )}
 
-      {/* Stock In/Out Modal */}
       {moveTarget && (
         <div
           className="fixed inset-0 flex items-end justify-center z-50"
@@ -716,7 +707,6 @@ export default function StockScreen({ lang, onBack }: Props) {
         </div>
       )}
 
-      {/* History Modal */}
       {historyTarget && (
         <div
           className="fixed inset-0 flex items-end justify-center z-50"
@@ -770,7 +760,6 @@ export default function StockScreen({ lang, onBack }: Props) {
         </div>
       )}
 
-      {/* Delete Confirm Modal */}
       {deleteTarget && (
         <div
           className="fixed inset-0 flex items-center justify-center z-50 px-4"
