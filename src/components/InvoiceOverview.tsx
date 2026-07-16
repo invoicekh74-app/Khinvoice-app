@@ -105,6 +105,7 @@ export default function InvoiceOverview({
   onBack,
   onEditInvoice,
   onPreviewInvoice,
+  onCreateInvoice,
 }: Props) {
   const tr = (kh: string, en: string) => (lang === 'KH' ? kh : en);
 
