@@ -1833,7 +1833,7 @@ export default function App() {
           }}
          onPreviewInvoice={(id) => {
           setEditInvoiceId(id);
-         setCurrentScreen('Invoice')/>      
+        setCurrentScreen('Invoice')/>                                          
       )}
 
       {/* ============================================
