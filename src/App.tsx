@@ -1057,7 +1057,7 @@ export default function App() {
           </div>
 
           <div className="w-full max-w-sm text-center mt-4">
-            <p className="text-[10px] font-medium" style={{ color: COLORS.muted }}>
+            <p className="text-[9px] font-medium" style={{ color: COLORS.muted }}>
               {lang === 'KH' ? 'Built By: HEng x iPhone 13 Pro Max' : 'Built with iPhone 13 Pro Max'}
             </p>
             <p className="text-[9px] mt-0.5" style={{ color: COLORS.muted, opacity: 0.7 }}>
