@@ -1050,19 +1050,19 @@ export default function App() {
                 </span>
               </button>
 
-              <button
-                onClick={openTelegram}
-                className="w-full mt-5 pt-3 border-t text-xs font-semibold flex items-center justify-center gap-1.5"
-                style={{ borderColor: COLORS.border, color: COLORS.goldDark }}
-              >
-                <Send size={INLINE} color={COLORS.goldDark} strokeWidth={2} />
-                {t.help}
-              </button>
-            </div>
-          </div>
+     <div className="flex-1">
+          <p className="text-white font-bold text-base">{tr('ទិដ្ឋភាពវិក្កយបត្រ', 'Invoice Overview')}</p>
+          <p className="text-white/70 text-xs">{tr('រាល់វិក្កយបត្រទាំងអស់', 'All your invoices')}</p>
         </div>
-      )}
-
+        <button
+          onClick={onCreateInvoice}
+          className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl font-bold text-sm"
+          style={{ backgroundColor: '#FFFFFF', color: COLORS.invoice }}
+        >
+          <span style={{ fontSize: 16, lineHeight: 1 }}>+</span>
+          {tr('បង្កើតថ្មី', 'New')}
+        </button>
+      </div>
       {/* ============================================
          SIGN UP
          ============================================ */}
