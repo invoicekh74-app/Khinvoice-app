@@ -1823,7 +1823,7 @@ export default function App() {
       {/* ============================================
          INVOICE OVERVIEW (list)
          ============================================ */}
-      {currentScreen === 'InvoiceOverview' && profile && (
+ {currentScreen === 'InvoiceOverview' && profile && (
         <InvoiceOverview
           lang={lang}
           onBack={() => setCurrentScreen('Home')}
@@ -1831,11 +1831,31 @@ export default function App() {
             setEditInvoiceId(id);
             setCurrentScreen('Invoice');
           }}
-         onPreviewInvoice={(id) => {
-          setEditInvoiceId(id);
-        setCurrentScreen('Invoice')/>                                          
+          onPreviewInvoice={(id) => {
+            setEditInvoiceId(id);
+            setCurrentScreen('Invoice');
+          }}
+          onCreateInvoice={() => {
+            setEditInvoiceId(null);
+            setCurrentScreen('Invoice');
+          }}
+        />
       )}
 
+      {/* ============================================
+         INVOICE (create / edit / preview)
+         ============================================ */}
+      {currentScreen === 'Invoice' && profile && (
+        <InvoiceScreen
+          lang={lang}
+          profile={profile}
+          onBack={() => {
+            setEditInvoiceId(null);
+            setCurrentScreen('InvoiceOverview');
+          }}
+          editInvoiceId={editInvoiceId}
+        />
+      )}
       {/* ============================================
          INVOICE (create / edit / preview)
          ============================================ */}
