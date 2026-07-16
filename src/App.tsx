@@ -1844,7 +1844,6 @@ export default function App() {
             setCurrentScreen('Invoice');
           }}
 
-      {/* ============================================
          INVOICE (create / edit / preview)
          ============================================ */}
       {currentScreen === 'Invoice' && profile && (
