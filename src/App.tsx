@@ -926,7 +926,7 @@ export default function App() {
          SIGN IN
          ============================================ */}
       {currentScreen === 'SignIn' && (
-        <div className="flex justify-center items-center p-4 min-h-[85vh]">
+        <div className="flex flex-col justify-center items-center p-4 min-h-[85vh]">
           <div
             className="w-full max-w-sm rounded-2xl overflow-hidden bg-white"
             style={{ boxShadow: '0 6px 20px rgba(24,41,62,0.07)' }}
